@@ -15,7 +15,7 @@ my %PUBLIC = (
 
 
 has description => "Generate minimal application.\n";
-has usage       => "usage: $0 generate mini [DIRNAME]\n";
+has usage       => "usage: $0 generate mini_app [DIRNAME]\n";
 
 has ua => sub { Mojo::UserAgent->new };
 
@@ -91,6 +91,7 @@ Welcome to the Mojolicious real-time web framework!
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 %%= stylesheet '/css/bootstrap.min.css'
 <title><%%= title %></title>
 </head>
