@@ -1,6 +1,5 @@
 package Mojolicious::Command::generate::mini_app;
 use Mojo::Base 'Mojolicious::Command';
-use Mojo::UserAgent;
 
 our $VERSION = "0.001";
 
@@ -13,20 +12,18 @@ my %PUBLIC = (
     'js/jquery-2.0.3.min.map' => "$jquery_url/jquery-2.0.3.min.map",
 );
 
-
 has description => "Generate minimal application.\n";
 has usage       => "usage: $0 generate mini_app [DIRNAME]\n";
-
-has ua => sub { Mojo::UserAgent->new };
 
 sub run {
     my ($self, $dir) = @_;
     $dir ||= "mini_app";
-    die "ERROR $dir is an invalid directory name.\n" if $dir !~ /^[a-z0-9_-]+$/i;
+    die "ERROR $dir is an invalid directory name.\n" if $dir !~ /^[a-z0-9_.-]+$/i;
     die "ERROR There already exists $dir.\n" if -d $dir;
 
+    my $ua = $self->app->ua;
     while (my ($file, $url) = each %PUBLIC) {
-        my $tx = $self->ua->get($url);
+        my $tx = $ua->get($url);
         if (my $res = $tx->success) {
             $self->write_rel_file("$dir/public/$file", $res->body);
         } else {
@@ -99,9 +96,9 @@ Welcome to the Mojolicious real-time web framework!
 <div class="container">
 <%%= content %>
 </div>
-</body>
 %%= javascript '/js/jquery-2.0.3.min.js'
 %%= javascript '/js/bootstrap.min.js'
+</body>
 </html>
 
 __END__

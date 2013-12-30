@@ -49,6 +49,7 @@
       },
       "test" : {
          "requires" : {
+            "File::pushd" : "0",
             "Test::More" : "0.98"
          }
       }
